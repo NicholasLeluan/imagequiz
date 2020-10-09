@@ -1,0 +1,24 @@
+.loginContainer{
+    border: 1px solid black;
+    width: 400px;
+    height: 400px;
+    margin: 0 auto;
+    text-align: center;
+    background: black;
+}
+.submitButton{
+    background-color: rgb(109, 255, 145);
+    border: none;
+    color: rgb(136, 136, 136);
+    font-size: 18px;
+}
+.loginText{
+    padding-top: 170px;
+    color: rgb(109, 255, 145);
+    font-size: 15px;
+    font-weight: bold;
+}
+table, th, td{
+    border: 1px solid rgb(167, 167, 167);
+    background: rgb(133, 133, 133);
+}

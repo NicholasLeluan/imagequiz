@@ -1,0 +1,33 @@
+.loginButtonContainer{
+    border: 1px solid black;
+    width: 400px;
+    height: 400px;
+    margin: 0 auto;
+    text-align: center;
+    background: black;
+}
+.loggedinMessage{
+    padding-top: 180px;
+    font-size: 25px;
+}
+.loginButton{
+    position: absolute;
+    padding-left: 180px;
+    padding-top: 180px;
+    font-size: 25px;
+}
+.loggedinContainer{
+    border: 1px solid black;
+    color: pink;
+    background: black;
+    width: 400px;
+    height: 400px;
+    margin: 0 auto;
+    padding-top: 180;
+    text-align: center;
+}
+.flowerDiv{
+    text-align: center;
+    font-weight: bold;
+    padding-left: 300px;
+}
