@@ -14,7 +14,7 @@ import Quizzes3 from './components/Quizzes3';
 class App extends React.Component {
   render(){
   return (
-    <Nope>
+    <Nope basename={process.env.PUBLIC_URL}>
       <Switch>
         <Route exact path='/imagequiz/' render={props => <Home {...props} />}>
           </Route>
