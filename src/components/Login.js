@@ -19,7 +19,6 @@ class Login extends React.Component{
         });
     } 
     onSubmit = (event) => {
-        console.log('in Onsubmit');
         if (this.state.username.trim().length > 0){
             this.setState({signedIn: true});
     }
@@ -38,7 +37,7 @@ class Login extends React.Component{
     }
 
     render(){
-        let from = {pathname: '/', state: {user: this.state.username}};
+        let from = {pathname: '/imagequiz/', state: {user: this.state.username}};
         if(this.state.signedIn){
             return (
                 <Redirect to={from}/>
@@ -47,7 +46,7 @@ class Login extends React.Component{
         return (
             <div className='loginContainer'>
             <div className='loginText'>
-                Enter Username & Password
+                Enter Username and Password
             <form onSubmit={this.onSubmit}>
                 <input 
                 type= "text" 
