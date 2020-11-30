@@ -3,6 +3,7 @@ import{
     Link
 }from "react-router-dom"
 import './Home.css';
+import server from "../ServerInterface/server";
 import daffodil from "./images/daffodil.png";
 import cherryblossum from "./images/cherryblossom.png";
 import daisy from "./images/daisy.jpg";
@@ -19,8 +20,13 @@ class Home extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            username:''
+            username:'',
+            quizzes: []
         };
+    }
+
+    componentDidMount(){
+        server.fetchQuizzes().then(x => this.setState([quizzes.x])).catch(e => console.log(e));
     }
 
 
@@ -56,6 +62,16 @@ class Home extends React.Component{
                     {/*use the this becasue you are referring to a 
                     function inside of the current class*/}
                     <div class="disclaimer">CLICK THE DAFFODIL, CHERRYBLOSSUM, or DAISY IMAGE FOR QUIZ QUESTIONS!!</div>
+                    <div>
+                        TEST<br/>
+                        {this.state.quizzes.map(x => 
+                            <Link to = {{pathname: '/quiz',state:{quiz:q}}}>
+                            <figure>
+                                <img src = {require('.images/'+q.picture)}></img> 
+                            </figure>
+                            </Link>)}
+
+                    </div>
                     <div className='flowerDiv'>
                         
                         <table>
