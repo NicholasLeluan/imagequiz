@@ -26,11 +26,13 @@ class Home extends React.Component{
     }
 
     componentDidMount(){
-        server.fetchQuizzes().then(x => this.setState([quizzes.x])).catch(e => console.log(e));
+        server.fetchQuizzes().then(x => this.setState({quizzes: x})).catch(e => console.log(e));
+        console.log(this.state.quizzes);
     }
 
 
     render(){
+        console.log(this.state.quizzes);
         let user = '';
         const location = this.props.location
         if(location){
@@ -62,16 +64,24 @@ class Home extends React.Component{
                     {/*use the this becasue you are referring to a 
                     function inside of the current class*/}
                     <div class="disclaimer">CLICK THE DAFFODIL, CHERRYBLOSSUM, or DAISY IMAGE FOR QUIZ QUESTIONS!!</div>
-                    <div>
+                    <div className = 'flowerDiv'>
                         TEST<br/>
+                        <table>
+                            <tr>
                         {this.state.quizzes.map(x => 
-                            <Link to = {{pathname: '/quiz',state:{quiz:q}}}>
-                            <figure>
-                                <img src = {require('.images/'+q.picture)}></img> 
-                            </figure>
-                            </Link>)}
+                            <td>
+                            <Link to = {{pathname: '/quizzes', state:{quiz:x} }}>
+                                    <figure>
+                                        <img src = {require('./images/'+x.image)} alt=""></img>
+                                    </figure>
 
+                            
+                            </Link>
+                            </td>)}
+                            </tr>
+                    </table>
                     </div>
+                    <br/>
                     <div className='flowerDiv'>
                         
                         <table>

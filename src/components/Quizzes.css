@@ -10,6 +10,7 @@ body {
 .question{
     text-align: center;
     font-weight: bold;
+    color: white;
 }
 
 .quizContainer{
@@ -82,4 +83,8 @@ body {
     text-align: center;
     border: 3px solid rgb(106, 255, 118);
     border-radius: 50px;
+}
+
+.tester{
+    color: white;
 }

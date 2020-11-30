@@ -8,6 +8,7 @@ import daisy from "./images/daisy.jpg";
 import lily from "./images/lily.jpg";
 import rose from "./images/rose.png";
 import sunflower from "./images/sunflower.png";
+import server from '../ServerInterface/server';
 import './Quizzes.css';
 
 class Quizzes extends React.Component{
@@ -16,14 +17,33 @@ class Quizzes extends React.Component{
         this.state = {
             questionNum: 0,
             score: 0,
+            questions: [],
             end: false
         };
     }
 
+    componentDidMount() {
+        let quiz = {};
+        const location = this.props.location;
+        if (location){
+            if (location.state){
+                if (location.state.quiz){
+                    quiz = location.state.quiz;
+                    console.log(quiz);
+                }
+            }
+        }
+        if (quiz){
+            let id = quiz.id;
+            server.fetchQuestions(id).then(x => this.setState({questions: x})).catch(e => console.log(e));
+                }
+        }
     
-
-    checkAnswer = (answer,questions) =>{
-        if(answer){
+    checkAnswer = (guess,answer) =>{
+        let questions = this.state.questions;
+        console.log(guess);
+        console.log(answer);
+        if (guess == answer){
             const updateScore = this.state.score +1;
             this.setState({score:updateScore})
         }
@@ -42,95 +62,34 @@ class Quizzes extends React.Component{
         this.setState({end: false});
     }
     render(){
-        const images = [
-            daffodil,cherryblossum,daisy,lily,rose,sunflower
-        ]
-        const questions = [
-            {
-                questionText: 'What flower is this?',
-                answerOptions: [ 
-                    {answerText: 'Rose', isCorrect: false},
-                    {answerText: 'Lily', isCorrect: false},
-                    {answerText: 'Daffodil', isCorrect: true},
-                    {answerText: 'Candy', isCorrect: false}
-
-                ],
-            },
-            {
-                questionText: 'What color is the flower?',
-                answerOptions: [ 
-                    {answerText: 'Red', isCorrect: false},
-                    {answerText: 'Blue', isCorrect: false},
-                    {answerText: 'Green', isCorrect: false},
-                    {answerText: 'Pink', isCorrect: true}
-                ],
-            },
-            {
-                questionText: 'What type of plant is this?',
-                answerOptions: [ 
-                    {answerText: 'Flower', isCorrect: true},
-                    {answerText: 'Vegetable', isCorrect: false},
-                    {answerText: 'Door', isCorrect: false},
-                    {answerText: 'Tree', isCorrect: false}
-                ],
-            },
-            {
-                questionText: "How many pedals on this flower?",
-                answerOptions: [
-                    {answerText: "1", isCorrect: false},
-                    {answerText: "2", isCorrect: false},
-                    {answerText: "5", isCorrect: false},
-                    {answerText: "6", isCorrect: true}
-                ]
-
-
-            },
-            {
-                questionText: "What type of flower is this?",
-                answerOptions: [
-                    {answerText: "Pancake", isCorrect: false},
-                    {answerText: "Dog", isCorrect: false},
-                    {answerText: "Rose", isCorrect: true},
-                    {answerText: "Fish", isCorrect: false}
-                ]
-            },
-            {
-                questionText: "What star does this flower get its name from?",
-                answerOptions: [
-                    {answerText: "Mercury", isCorrect: false},
-                    {answerText: "Earth", isCorrect: false},
-                    {answerText: "Saturn", isCorrect: false},
-                    {answerText: "Sun", isCorrect: true}
-                ]
-            },
-        ]
-
+        if (this.state.questions.length == 0 ){
+            return(<div>
+                data is loading...
+            </div>)
+        }
+        let quest = this.state.questions;
         return(
             <div class = "quizContainer">
                 {this.state.end ? 
-
                     <div> 
-                        <div class = "photoContainer"><img src={daffodil} /></div>
+                        <div class = "photoContainer"><img src={require('./images/'+this.props.location.state.quiz.image)}/></div>
                         <div class= "displayScore">
                             <div class= "scoreStyle">Total Correct: {this.state.score}<br/>
-                            Total Answered: {questions.length}</div>
+                            Total Answered: {quest.length}</div>
                             </div>
                         <button class = "goHome"><Link to='/imagequiz/'>Go Home</Link></button><br/>
                         <button class = "goHome" onClick={this.tryAgain}>Try Again</button>
                     </div> 
                 :
                     <div>
-                        <div class = "photoContainer"><img src={images[this.state.questionNum]} /></div>
-                        <div class="question">{questions[this.state.questionNum].questionText}</div>
-                    <div class = "questionsContainer">
-                            {questions[this.state.questionNum].answerOptions.map((option) => (
-                                <button 
-                                class="buttonDisplay"
-                                onClick={() => this.checkAnswer(option.isCorrect,questions)}>
-                                    {option.answerText}
-                                </button>
-                            ))}
-                            </div>
+                        <div class = "photoContainer"><img src={require('./images/'+quest[this.state.questionNum].picture)} /></div>
+                        <div class="question">{quest[this.state.questionNum].title}</div>
+                        <div class = "questionContainer">{quest[this.state.questionNum].choices.map((option) => (
+                            <button class="buttonDisplay" onClick={() => this.checkAnswer(option,quest[this.state.questionNum].correct)}>
+                                {option}
+                            </button>
+                        ))}
+                        </div>
                     </div>
                         }
             </div>

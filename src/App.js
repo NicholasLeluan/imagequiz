@@ -21,8 +21,7 @@ class App extends React.Component {
         <Route path='/login'> 
         <Login />
         </Route>
-        <Route path ='/quizzes'>
-          <Quizzes />
+        <Route path ='/quizzes' render={props => <Quizzes {...props} />}>
         </Route>
         <Route path ='/quizzes2'>
           <Quizzes2 />
