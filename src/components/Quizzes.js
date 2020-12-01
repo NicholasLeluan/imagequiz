@@ -41,8 +41,6 @@ class Quizzes extends React.Component{
     
     checkAnswer = (guess,answer) =>{
         let questions = this.state.questions;
-        console.log(guess);
-        console.log(answer);
         if (guess == answer){
             const updateScore = this.state.score +1;
             this.setState({score:updateScore})
