@@ -16,7 +16,7 @@ class App extends React.Component {
   return (
     <Nope basename={process.env.PUBLIC_URL}>
       <Switch>
-        <Route exact path='/imagequiz/' render={props => <Home {...props} />}>
+        <Route exact path='/' render={props => <Home {...props} />}>
           </Route>
         <Route path='/login'> 
         <Login />

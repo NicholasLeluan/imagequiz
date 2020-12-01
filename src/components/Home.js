@@ -70,7 +70,7 @@ class Home extends React.Component{
                             <tr>
                         {this.state.quizzes.map(x => 
                             <td>
-                            <Link to = {{pathname: '/quizzes', state:{quiz:x} }}>
+                            <Link to = {{pathname: '/quizzes', state:{quiz:x,username:this.state.username}}}>
                                     <figure>
                                         <img src = {require('./images/'+x.image)} alt=""></img>
                                     </figure>

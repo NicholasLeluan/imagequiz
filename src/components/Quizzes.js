@@ -52,6 +52,22 @@ class Quizzes extends React.Component{
             this.setState({questionNum:updateQNum});
         }else if (updateQNum == questions.length){
             this.setState({end: true});
+            const api = server.storeScore();
+            let quizID = this.props.location.state.quiz;
+            let username;
+            if (this.props.location.state.username){
+                username = this.props.location.username;
+            }else{
+                username = "User Not Logged In";
+            }
+            let data = {score: this.state.score, quizid: quizID , username: username }
+            fetch(api,{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)}
+            ).catch(e => console.log(e));
         }
 
     }
@@ -67,6 +83,10 @@ class Quizzes extends React.Component{
                 data is loading...
             </div>)
         }
+        if (this.state.end){
+            let scores = server.getScores();
+            console.log(scores);
+        }
         let quest = this.state.questions;
         return(
             <div class = "quizContainer">
@@ -77,7 +97,7 @@ class Quizzes extends React.Component{
                             <div class= "scoreStyle">Total Correct: {this.state.score}<br/>
                             Total Answered: {quest.length}</div>
                             </div>
-                        <button class = "goHome"><Link to='/imagequiz/'>Go Home</Link></button><br/>
+                        <button class = "goHome"><Link to='/'>Go Home</Link></button><br/>
                         <button class = "goHome" onClick={this.tryAgain}>Try Again</button>
                     </div> 
                 :
